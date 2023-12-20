@@ -1,5 +1,7 @@
 <?php
 
+use App\Controller;
+
 /**
  * Permet de rediriger l'utilisateur selon une adresse personnalisée
  */
@@ -41,8 +43,8 @@
                 // list($controller, $method) = $this->routes[$uri];
                 [$controller, $method] = $this->routes[$uri];
 
-                // Inclusion du fichier controller s'il existe
-                require_once "../src/Controller/$controller.php";
+                // Ajout de l'espace de nom à mon controller
+                $controller = "App\\Controller\\$controller";
 
                 // Vérifie si la classe $controller existe
                 if (class_exists($controller)) {
@@ -58,13 +60,10 @@
             }
         }
 
-        // On affiche une erreur 404 si besoin
-        require_once '../src/Controller/ErrorController.php';
-
         // Force le code de retour à 404
         http_response_code(404);
 
-        $errorInstance = new ErrorController();
+        $errorInstance = new App\Controller\ErrorController();
         $errorInstance->error404();
     }
 

@@ -11,7 +11,6 @@ $router = new Router();
 
 // Nos routes
 $router->add('/portfolio', 'HomeController', 'index');
-$router->add('/portfolio/test', 'HomeController', 'test');
 $router->add('/portfolio/contact', 'HomeController', 'contact');
 
 // Dispatch
