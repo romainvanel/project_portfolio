@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-class HomeController {
+class HomeController extends AbstractController {
 
     public function index(): void {
-        require_once '../templates/home/index.php';
+        $this->view('home/index.php');
     }
 
     public function test(): void {
@@ -30,6 +30,9 @@ class HomeController {
 
     public function contact() {
 
+        $error = null;
+        $success = null;
+
         // On vérifie si le formulaire est envoyé
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -40,6 +43,7 @@ class HomeController {
 
                 // Retirer les espaces en début et fin de chaine
                 $name = trim($name);
+                $email = trim($email);
                 $content = trim($content);
 
             // On vérifie si les champs ne sont pas vides
@@ -79,6 +83,9 @@ class HomeController {
             }
 
         }
-        require_once '../templates/home/contact.php';
+        $this->view('home/contact.php', [
+            'error' => $error,
+            'success' => $success
+        ]);
     }
 }
