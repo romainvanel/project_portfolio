@@ -15,11 +15,21 @@
     }
     
     ?>
+    <?php
+    //Si la variable $error existe, j'affiche son contenu
+    if (isset($success)) {
+        echo $success;
+    }
+    
+    ?>
+
     <form method="post">
         <label for="name">Nom</label>
         <input type="text" id="name" name="name">
-        <label for="avis">avis</label>
-        <textarea id="avis" name="avis"></textarea>
+        <label for="email">mail</label>
+        <input type="email" id="email" name="email">
+        <label for="content">Message</label>
+        <textarea id="content" name="content"></textarea>
         <button>envoyer</button>
     </form>
 </body>
