@@ -55,4 +55,28 @@ class ProjetRepository extends Database{
             }
             return $objectsProjects;
         }
+
+        // Sélectionne une seul projet
+        public function select(int $id): Projet|bool {
+
+            $objectProject = false;
+
+            $query = $this->instance->prepare("SELECT * FROM projets WHERE id = :id");
+            $query->bindValue(':id', $id);
+            $query->execute();
+
+            $projet = $query->fetch();
+
+            if ($projet) {
+                $objectProject = new Projet();
+                $objectProject->setId($projet->id);
+                $objectProject->setTitle($projet->title);
+                $objectProject->setDescription($projet->description);
+                $objectProject->setPreview($projet->preview);
+                $objectProject->setCreatedAt($projet->created_at);
+                $objectProject->setUpdatedAt($projet->updated_at);
+            }
+
+            return $objectProject;
+        }
 }

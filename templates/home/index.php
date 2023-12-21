@@ -17,7 +17,7 @@
                     <p>Crée le : <?php echo $projet->getCreatedAt()->format('d.m.Y'); ?></p>
                     <img src="<?php echo $_ENV['FOLDER_PROJECT'] .$projet->getPreview(); ?>" alt="<?php echo $projet->getTitle(); ?>">
                     <div>
-                        <a href="" class="btn btn-primary">Lire plus</a>
+                        <a href="/portfolio/projet/details?id=<?php echo $projet->getId(); ?>" class="btn btn-primary">Lire plus</a>
                     </div>
             </article>
         <?php endforeach ?>

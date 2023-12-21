@@ -16,6 +16,23 @@ class HomeController extends AbstractController {
         ]);
     }
 
+    public function details(): void {
+        // Sélection le projet
+        $projetRepository = new ProjetRepository;
+        $project = $projetRepository->select($_GET['id']);
+
+        // erreur 404 
+        if (!$project) {
+            // Header car on veut que ce soit traiter par la méthode error404 qui rnvoie un code erreur 404 
+            header('Location: /portfolio/404');
+            exit;
+        }
+
+        $this->view('home/details.php', [
+            'projet' => $project
+        ]);
+    }
+
     public function contact() {
 
         $error = null;
@@ -76,8 +93,5 @@ class HomeController extends AbstractController {
             'success' => $success
         ]);
     }
-
-    public function projet() {
-        
-    }
+    
 }
