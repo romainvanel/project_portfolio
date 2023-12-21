@@ -9,18 +9,16 @@
 </head>
 <body>
     <div class="d-flex flex-column justify-content-center">
-            <?php foreach($projets as $projet): ?>
                 <article class="border m-3">
                     <h2><?php echo $projet->getTitle() ?></h2>
-                    <p><?php echo mb_strimwidth($projet->getDescription(), 0, 75, '...'); ?></p>
+                    <p><?php echo $projet->getDescription() ?></p>
                     
-                    <p>Crée le : <?php echo $projet->getCreatedAt()->format('d.m.Y'); ?></p>
-                    <img src="<?php echo $_ENV['FOLDER_PROJECT'] .$projet->getPreview(); ?>" alt="<?php echo $projet->getTitle(); ?>">
-                    <div>
-                        <a href="" class="btn btn-primary">Lire plus</a>
-                    </div>
+                    <p>Crée le : <?php echo $projet->getCreatedAt() ?></p>
+                    <p>Mis à jour le : <?php echo $projet->getUpdatedAt() ?></p>
+                    <img src="<?php echo $projet->getPreview() ?>" alt="">
+
+                    <a href="" class="btn btn-primary">Lire plus</a>
             </article>
-        <?php endforeach ?>
     </div>
 </body>
 </html>

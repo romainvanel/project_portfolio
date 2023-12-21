@@ -42,7 +42,13 @@ class Projet{
 
     public function getPreview(): string
     {
-        return $this->preview;
+        // Si l'image n'existe pas, j'en attribue une par défaut
+        return (!file_exists($_ENV['FOLDER_PROJECT'] . $this->preview)) ? 'default.png' : $this->preview;
+    }
+
+    // Retourne le chemin complet de l'image du projet
+    public function getFolderPreview(): string {
+        return $_ENV['FOLDER_PROJECT'] . $this->getPreview();
     }
 
     public function setPreview(string $preview): void
@@ -50,9 +56,9 @@ class Projet{
         $this->preview = $preview;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
-        return $this->createdAt;
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $this->createdAt);
     }
 
     public function setCreatedAt(string $createdAt): void

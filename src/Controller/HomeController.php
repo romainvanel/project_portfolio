@@ -2,30 +2,18 @@
 
 namespace App\Controller;
 
+use App\Repository\ProjetRepository;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class HomeController extends AbstractController {
 
     public function index(): void {
-        $this->view('home/index.php');
-    }
+        $projetRepository = new ProjetRepository();
+        $projets = $projetRepository->selectAll();
 
-    public function test(): void {
-
-        // Si le formulaire est envoyé...
-        if (!empty($_POST)) {
-
-            // Vérifie si les champs ne sont pas vides
-            if (!empty($_POST['name'] && !empty($_POST ['avis']))) {
-
-            } else {
-                // Pas besoin de faire une $_SESSION car on ne traite pas les infos sur une autre page - Tous ce fait sur la même page
-                $error = 'Tous les champs sont obligatoires';
-            }
-        }
-
-        // L'appel du template se situe toujours en dernière ligne de la méthode
-        require_once '../templates/home/test.php';
+        $this->view('home/index.php', [
+            'projets' => $projets
+        ]);
     }
 
     public function contact() {
@@ -87,5 +75,9 @@ class HomeController extends AbstractController {
             'error' => $error,
             'success' => $success
         ]);
+    }
+
+    public function projet() {
+        
     }
 }

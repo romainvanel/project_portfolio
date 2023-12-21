@@ -17,5 +17,6 @@ $router->add('/portfolio', 'HomeController', 'index');
 $router->add('/portfolio/contact', 'HomeController', 'contact');
 $router->add('/portfolio/fixtures', 'FixtureController', 'index');
 
+
 // Dispatch
 $router->dispatch($_SERVER['REQUEST_URI']);
