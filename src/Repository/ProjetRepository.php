@@ -16,7 +16,8 @@ class ProjetRepository extends Database{
      * Insertion en base de données
      */
     public function add(Projet $projet): Projet {
-        $query = $this->instance->prepare("INSERT INTO projets (title, description, preview, created_at, updated_at) VALUES (title, description, preview, created_at, updated_at)");
+        $query = $this->instance->prepare("INSERT INTO projets (title, description, preview, created_at, updated_at) VALUES (:title, :description, :preview, :created_at, :updated_at)");
+
         $query->bindValue(':title', $projet->getTitle());
         $query->bindValue(':description', $projet->getDescription());
         $query->bindValue(':preview', $projet->getPreview());
