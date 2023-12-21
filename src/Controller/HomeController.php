@@ -54,15 +54,15 @@ class HomeController extends AbstractController {
                     // Envoie de l'email avec PHPMailer
                     $phpmailer = new PHPMailer();
                     $phpmailer->isSMTP();
-                    $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+                    $phpmailer->Host = $_ENV['MAIL_SMTP'];
                     $phpmailer->SMTPAuth = true;
-                    $phpmailer->Port = 2525;
-                    $phpmailer->Username = 'ae60964d97a39e';
-                    $phpmailer->Password = 'f7e1799fc534ed';
+                    $phpmailer->Port = $_ENV['MAIL_PORT'];
+                    $phpmailer->Username = $_ENV['MAIL_USER'];
+                    $phpmailer->Password = $_ENV['MAIL_PASS'];
 
                     // envoie du mail
                     $phpmailer->setFrom($email, $name);
-                    $phpmailer->addAddress('romain@test.com', 'Romain');
+                    $phpmailer->addAddress($_ENV['USER_NAME'], $_ENV['USER_EMAIL']);
                     $phpmailer->Subject = 'Message du formulaire de contact';
                     $phpmailer->Body = $content;
 
