@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ProjetRepository;
 use App\Entity\Projet;
+use App\Services\UploadService;
 
 class AdminController extends AbstractController {
 
@@ -29,65 +30,47 @@ class AdminController extends AbstractController {
     // Ajout de nouveau projet
     public function addProjet(): void {
 
-            $error = null;
+        $error = null;
+        $success = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Nettoyage des données
             $title = htmlspecialchars(strip_tags($_POST['title']));
             $description = htmlspecialchars(strip_tags($_POST['description']));
-            $preview = $_FILES['preview'];
 
             // Retirer les espaces en début et fin de chaine
             $title = trim($title);
             $description = trim($title);
 
             // Vérifier si le formulaire est complet
-            if (!empty($title) && !empty($description) && (isset($preview)) && $preview['error'] === UPLOAD_ERR_OK) {
+            if (!empty($title) && !empty($description) && (isset($_FILES['preview'])) && $_FILES['preview']['error'] === UPLOAD_ERR_OK) {
 
-                // Définir le poids max de l'image
-                $maxSize = 1 * 1024 * 1024;
+                // Upload de l'image
+                $uploadService = new UploadService();
+                $preview = $uploadService->upload($_FILES['preview']);
 
-                // Tableau contenant les extensions et les types MIME autorisés
-                $typeImage = [
-                    'png' => 'image/png',
-                    'jpg' => 'image/jpeg',
-                    'jpeg' => 'image/jpeg',
-                    'webp' => 'image/webp'
-                ];
-
-                // Extraction de l'extension de l'image
-                $extension = strtolower(pathinfo($preview['name'], PATHINFO_EXTENSION));
-
-                // Vérifier si le fichier est une image autorisée
-                if (array_key_exists($extension, $typeImage) && in_array($preview['type'], $typeImage)) {
-
-                    // Vérifier le poids de l'image
-                    if ($_FILES['preview']['size']) {
+                if ($preview) {
 
                         // Création d'un nouveau projet
                         $projetRepository = new ProjetRepository();
 
+                        // Date du jour 
+                        $date = new \DateTime();
+
                         // On crée un objet avec l'entité "Projet"
                         $projet = new Projet();
                         $projet->setTitle($title);
-                        $projet->setDescription($_POST['description']);
-                        $projet->setPreview($preview['name']);
-                        $projet->setCreatedAt((new \DateTime('now'))->format('Y-m-d H:i:s'));
-                        $projet->setUpdatedAt((new \DateTime('now'))->format('Y-m-d H:i:s'));
+                        $projet->setDescription($description);
+                        $projet->setPreview($preview);
+                        $projet->setCreatedAt($date->format('Y-m-d H:i:s'));
+                        $projet->setUpdatedAt($date->format('Y-m-d H:i:s'));
                 
                         // Insérer en base de données
                         $projetRepository->add($projet);
 
-                        header('Location: /portfolio/admin');
-                        exit;
+                        $success = 'Votre nouveau projet est enregistré';
 
-                    } else {
-                        $error = "Le poids de l'image ne doit pas excéder 1Mo";
-                    }
-
-                } else {
-                    $error = 'Votre fichier n\'est pas une image autorisée';
                 }
 
             } else {
@@ -96,7 +79,8 @@ class AdminController extends AbstractController {
         }
 
         $this->view('admin/addProjet.php', [
-            'error' => $error
+            'error' => $error,
+            'success' => $success
         ]);
 
         }
