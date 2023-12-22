@@ -1,5 +1,8 @@
 <?php
 
+// Démarrage de la session
+session_start();
+
 // Chargement des dépendances PHP
 require_once '../vendor/autoload.php';
 
@@ -21,12 +24,13 @@ $router->add('/portfolio/contact', 'HomeController', 'contact');
 $router->add('/portfolio/fixtures', 'FixtureController', 'index');
 // Détail d'un projet
 $router->add('/portfolio/projet/details', 'HomeController', 'details');
-// Erreur 404
-$router->add('/portfolio/404', 'ErrorController', 'error404');
 // Formulaire de connexion
 $router->add('/portfolio/login', 'AuthController', 'login');
 // Administration
 $router->add('/portfolio/admin', 'AdminController', 'admin');
+// Erreur 404
+$router->add('/portfolio/404', 'ErrorController', 'error404');
+
 
 // Dispatch
 $router->dispatch($_SERVER['REQUEST_URI']);

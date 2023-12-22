@@ -11,10 +11,10 @@
         <div class="container-fluid text-center">
             <h1 class="p-3">Connexion à l'administration</h1>
             <div class="w-50 m-auto border rounded p-3">
-                <form action="login.php" method="post" class="d-flex flex-column w-100">
+                <form method="post" class="d-flex flex-column w-100">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Adresse Email</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+                        <label for="username" class="form-label">Identifiant</label>
+                        <input type="text" class="form-control" id="username" name="username">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mot de passe</label>
@@ -23,10 +23,13 @@
                     <button class="btn btn-primary">Se connecter</button>
 
                     <!-- Mes erreurs -->
-                    <div class="alert alert-danger mt-3">
-                    </div>
-
-
+                    <!-- Si la variable $error existe, j'affiche son contenu -->
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger mt-3">
+                            
+                            <?php echo $error; ?>
+                        </div>                              
+                    <?php endif ?>
                 </form>
             </div>
         </div>

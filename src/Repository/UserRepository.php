@@ -31,4 +31,25 @@ class UserRepository extends Database {
         return $user;
     }
 
+    public function selectUser(string $username):  User|bool {
+        $objectUser = false;
+
+        $query = $this->instance->prepare("SELECT * FROM users WHERE username = :username");
+        $query->bindValue(':username', $username);
+        $query->execute();
+
+        $user = $query->fetch();
+
+        if ($user) {
+            $objectUser = new User();
+            $objectUser->setId($user->id);
+            $objectUser->setUsername($user->username);
+            $objectUser->setPassword($user->password);
+
+        return $objectUser;
+        }
+        return false;
+    }
+
+
 }
