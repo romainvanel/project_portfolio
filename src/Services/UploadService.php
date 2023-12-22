@@ -6,7 +6,8 @@ namespace App\Services;
  * Permet d'uploader une image
  */
 class UploadService {
-    public function upload(array $file): string|bool {
+    public function upload(array $file, ?string $deleteOldFile = null): string|bool {
+
         // Récupérer l'extension du fichier
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
 
@@ -16,6 +17,10 @@ class UploadService {
                 // Génère un nouveau nom pour l'image
                 $newName = md5(uniqid('', true)) . '.' . $extension;
 
+                // Si un ancien nom de fichier est fourni, on le supprime 
+                if ($deleteOldFile !== null) {
+                    unlink($_ENV['FOLDER_PROJECT'] . $deleteOldFile);
+                }
                 // Upload le fichier
                 move_uploaded_file(
                     $file['tmp_name'],

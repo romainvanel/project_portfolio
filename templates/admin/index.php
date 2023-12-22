@@ -52,10 +52,10 @@
                                 <?php echo $project->getCreatedAt()->format('d.m.Y');?> 
                             </td>                  
                             <td>
-                                <a href="" class="btn btn-outline-success fw-bold">Editer</a>
+                                <a href="/portfolio/admin/edit/projet?id=<?php echo $project->getId();?>" class="btn btn-outline-success fw-bold">Editer</a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-outline-danger fw-bold">Supprimer</a>
+                                <a href="/portfolio/admin/delete/projet?id=<?php echo $project->getId();?>" class="btn btn-outline-danger fw-bold">Supprimer</a>
                             </td>
                             <td>
 

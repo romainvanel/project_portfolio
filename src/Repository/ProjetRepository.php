@@ -6,10 +6,40 @@ use App\Entity\Projet;
 use Core\Database;
 
 class ProjetRepository extends Database{
+
     private $instance;
 
     public function __construct() {
         $this->instance = self::getInstance();
+    }
+
+    /**
+     * Supprime en base de données
+    */ 
+    public function delete(Projet $projet): Projet {
+        $query = $this->instance->prepare("DELETE FROM projets WHERE id = :id");
+        $query->bindValue(':id', $projet->getId());
+        $query->execute();
+
+        return $projet;
+    }   
+
+    /**
+     * Edition en base de données
+     */
+    public function edit (Projet $projet): Projet {
+        $query = $this->instance->prepare("UPDATE projets SET title = :title, description = :description, preview = :preview, created_at = :created_at, updated_at = :updated_at WHERE id = :id");
+
+        $query->bindValue(':title', $projet->getTitle());
+        $query->bindValue(':description', $projet->getDescription());
+        $query->bindValue(':preview', $projet->getPreview());
+        $query->bindValue(':created_at', $projet->getCreatedAt()->format('Y-m-d H.i.s'));
+        $query->bindValue(':updated_at', $projet->getUpdatedAt());
+        $query->bindValue(':id', $projet->getId());
+        $query->execute();
+
+        // On retourne l'objet
+        return $projet;
     }
 
     /**
@@ -79,5 +109,4 @@ class ProjetRepository extends Database{
 
             return $objectProject;
         }
-
 }
