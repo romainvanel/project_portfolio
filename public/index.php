@@ -26,9 +26,12 @@ $router->add('/portfolio/fixtures', 'FixtureController', 'index');
 $router->add('/portfolio/projet/details', 'HomeController', 'details');
 // Formulaire de connexion
 $router->add('/portfolio/login', 'AuthController', 'login');
+// Déconnexion
+$router->add('/portfolio/logout', 'AuthController', 'logout');
 // Administration
 $router->add('/portfolio/admin', 'AdminController', 'index');
-$router->add('/portfolio/logout', 'AuthController', 'logout');
+// Ajout de nouveau projet
+$router->add('/portfolio/admin/projet/add', 'AdminController', 'addProjet');
 // Erreur 404
 $router->add('/portfolio/404', 'ErrorController', 'error404');
 
