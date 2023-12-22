@@ -1,10 +1,10 @@
 <?php
 
-// Démarrage de la session
-session_start();
-
 // Chargement des dépendances PHP
 require_once '../vendor/autoload.php';
+
+// Démarrage de la session
+session_start();
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
@@ -27,7 +27,8 @@ $router->add('/portfolio/projet/details', 'HomeController', 'details');
 // Formulaire de connexion
 $router->add('/portfolio/login', 'AuthController', 'login');
 // Administration
-$router->add('/portfolio/admin', 'AdminController', 'admin');
+$router->add('/portfolio/admin', 'AdminController', 'index');
+$router->add('/portfolio/logout', 'AuthController', 'logout');
 // Erreur 404
 $router->add('/portfolio/404', 'ErrorController', 'error404');
 

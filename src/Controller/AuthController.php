@@ -3,8 +3,18 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Controller\AdminController;
 
 class Authcontroller extends AbstractController {
+
+    // Déconnexion de l'utilisateur
+    public function logout(): void {
+        // Destruction de la session USER
+        unset($_SESSION['user']);
+        // Redirection vers le formulaire de connexion
+        header('Location: /portfolio/login');
+    }
+
     public function login(){
 
         $error = null; 
@@ -33,8 +43,7 @@ class Authcontroller extends AbstractController {
                     $_SESSION['user'] = $user;
 
                     // Redirection vers l'administration
-                    $this->view('admin/index.php');
-                    exit;
+                    header('Location: /portfolio/admin');
 
                 } else {
                     $error = 'Utilisateur ou mot de passe non valide';

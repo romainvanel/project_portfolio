@@ -2,7 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+
 abstract class AbstractController {
+
+    // Vérifie si l'utilisateur est connecté
+    protected function isUserLoggedIn() : bool {
+        // Je vérifie que la session nommée "user" existe bien et que celle-ci a été instanciée avec la classe user
+        return isset($_SESSION['user']) && $_SESSION['user'] instanceof User;
+    }
 
     protected function view(string $path, array $vars = []): void {
 
@@ -18,5 +26,4 @@ abstract class AbstractController {
         throw new \Exception("Le template \"$path\" n'existe pas");
 
     }
-
 }
