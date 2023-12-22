@@ -9,6 +9,14 @@
 </head>
 <body>
     <div><a href="/portfolio/login">Login</a></div>
+
+    <!-- Affiche un  message si l'utilisateur est connecté -->
+    <?php if($isLoggedIn): ?>
+        <div class="alert alert-success">
+            Bonjour <?php echo $_SESSION['user']->getUsername(); ?> !
+        </div>
+    <?php endif ?>
+
     <div class="d-flex flex-column justify-content-center">
             <?php foreach($projets as $projet): ?>
                 <article class="border m-3">
